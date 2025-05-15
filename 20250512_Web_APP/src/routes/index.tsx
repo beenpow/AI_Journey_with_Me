@@ -1,9 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
+
+import DefaultLayout from './layouts/Default'
+import EmptyLayout from './layouts/Empty'
+
 import Home from './pages/Home'
 import About from './pages/About'
-import DefaultLayout from './layouts/Default'
 import Movies from './pages/Movies'
 import MovieDetails from './pages/MovieDetails'
+import Todos from './pages/Todos'
 
 const router = createBrowserRouter([
     {
@@ -26,6 +30,15 @@ const router = createBrowserRouter([
             {
                 path: '/movies/:movieId',// movies/123
                 element: <MovieDetails />
+            }
+        ]
+    },
+    {
+        element: <EmptyLayout />,
+        children: [
+            {
+                path: '/todos',
+                element: <Todos />
             }
         ]
     }
