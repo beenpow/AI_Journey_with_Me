@@ -14,7 +14,7 @@ export default function MovieList() {
                 </div>
             )}
             {message && <div>{message}</div>}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-[20px]">
                 {movies.map((movie) => (
                     <MovieItem 
                         key={movie.imdbID} 
