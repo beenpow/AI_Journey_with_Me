@@ -20,28 +20,46 @@ export const useTodoStore = create(
         title: '',
         todos: [] as Todos,
     }, 
-    (set, get) => ({
-        setTitle: (title: string) => {
+    (set, get) => {
+        // createTodo() 함수 내에서 fetchTodos() 함수를 호출할 수 있게 하기 위해서 모든 함수를 return 에서 밖으로 빼준다.
+        function setTitle(title: string) {
             set({ title: title })
-        },
+        }
         // 서버와 통신할 함수 하나.
-        fetchTodos: async () => {
+        async function fetchTodos() {
             const todos = await requestTodos({
                 method: 'GET'
             })
             set({ todos: todos })
-        },
-        createTodo: async () => {
+        }
+        async function createTodo() {
             const { title } = get()
             await requestTodos({
                 method: 'POST',
                 data: {
                     title: title,
-                    order: 0,
-                    done: false
                 }
             })
-    }))
+            await fetchTodos()
+        }
+        async function updateTodo(todo: Todo) {
+            await requestTodos({
+                todoId: todo.id,
+                method: 'PUT',
+                data: {
+                    title: todo.title,
+                    done: todo.done
+                }
+            })
+            await fetchTodos()
+        }
+        return {
+            setTitle,
+            fetchTodos,
+            createTodo,
+            updateTodo
+        }
+    }) 
 )
 
 async function requestTodos({
