@@ -1,0 +1,27 @@
+import { useMovieStore } from '@/stores/movie'
+import Loader from '@/components/Loader'
+import MovieItem from '@/components/movies/MovieItem'
+
+export default function MovieList() {
+    const isLoading = useMovieStore((state) => state.isLoading)
+    const message = useMovieStore((state) => state.message)
+    const movies = useMovieStore((state) => state.movies)
+    return (
+        <>
+            {isLoading && (
+                <div className="relative h-[30px]">
+                    <Loader />
+                </div>
+            )}
+            {message && <div>{message}</div>}
+            <div className="flex flex-wrap gap-4">
+                {movies.map((movie) => (
+                    <MovieItem 
+                        key={movie.imdbID} 
+                        movie={movie} 
+                    />
+                ))}
+            </div>
+        </>
+    )
+}
