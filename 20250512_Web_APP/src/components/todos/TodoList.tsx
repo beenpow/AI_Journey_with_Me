@@ -3,7 +3,7 @@ import { useEffect } from 'react'
     stored/todo.ts 에 선언해둔, combine 을 위해 create 로 선언한 export 함수를 여기서 불러온다.
 */
 import { useTodoStore } from '@/stores/todo'
-
+import TodoItem from './TodoItem'
 
 export default function TodoList() {
     const todos = useTodoStore(state => state.todos)
@@ -13,7 +13,7 @@ export default function TodoList() {
     }, [])
     return <div>
         {todos.map(todo => (
-            <div key={todo.id}>{todo.title}</div>
+            <TodoItem key={todo.id} todo={todo} />
         ))}
     </div>
 }
