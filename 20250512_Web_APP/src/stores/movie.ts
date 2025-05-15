@@ -95,8 +95,15 @@ export const useMovieStore = create(
         },
         fetchMovieDetails: async(movieId?: string) => {
             if (!movieId) return
+            set({ 
+                currentMovie: null,
+                isLoading: true 
+            })
             const { data }= await axios(`https://omdbapi.com?apikey=7035c60c&i=${movieId}`)
-            set({ currentMovie: data })
+            set({ 
+                currentMovie: data,
+                isLoading: false,
+            })
         }
     })))
 )
