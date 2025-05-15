@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import Home from './pages/Home'
 import About from './pages/About'
 import DefaultLayout from './layouts/Default'
+import Movies from './pages/Movies'
+import MovieDetails from './pages/MovieDetails'
 
 const router = createBrowserRouter([
     {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
                 // 우리 사이트의 main 페이지에 접속하면 아래 요소를 보여줄거에요.
                 element: <About />
             },
+            {
+                path: '/movies',
+                element: <Movies />
+            },
+            {
+                path: '/movies/:movieId',// movies/123
+                element: <MovieDetails />
+            }
         ]
     }
 ])

@@ -11,12 +11,47 @@ export interface Movie {
     Poster: string
 }
 
+export interface MovieDetails {
+    Title: string
+    Year: string
+    Rated: string
+    Released: string
+    Runtime: string
+    Genre: string
+    Director: string
+    Writer: string
+    Actors: string
+    Plot: string
+    Language: string
+    Country: string
+    Awards: string
+    Poster: string
+    Ratings: Rating[]
+    Metascore: string
+    imdbRating: string
+    imdbVotes: string
+    imdbID: string
+    Type: string
+    DVD: string
+    BoxOffice: string
+    Production: string
+    Website: string
+    Response: string
+  }
+  
+  export interface Rating {
+    Source: string
+    Value: string
+  }
+  
+
 export const useMovieStore = create(
     combine({
         isLoading: false,
         searchText: '',
         movies: [] as Movies,
         message: '',
+        currentMovie: null as MovieDetails | null,
     }, ((set, get) => ({
         setSearchText: (searchText: string) => {
             set({ searchText })
@@ -57,6 +92,11 @@ export const useMovieStore = create(
                 })
                 return
             }
+        },
+        fetchMovieDetails: async(movieId?: string) => {
+            if (!movieId) return
+            const { data }= await axios(`https://omdbapi.com?apikey=7035c60c&i=${movieId}`)
+            set({ currentMovie: data })
         }
     })))
 )
