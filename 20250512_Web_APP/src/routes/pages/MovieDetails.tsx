@@ -3,6 +3,7 @@ import { useMovieStore } from "@/stores/movie";
 import { useParams } from "react-router";
 import Image from '@/components/image'
 import Loader from "@/components/Loader";
+import Modal from "@/components/Modal";
 
 export default function MovieDetails() {
     const { movieId } = useParams()
@@ -14,10 +15,10 @@ export default function MovieDetails() {
         fetchMovieDetails(movieId)
     }, [movieId])
 
-    return <>
+    return <Modal>
         {isLoading ? <Loader /> : 
         currentMovie && 
-        <div className="flex max-w-[1100px] gap-[20px] m-auto">
+        <div>
             {/* 해당 웹에서 맨 뒷자리 300을 1000으로 바꾸면 고해상도 이미지를 받을 수 있음 */}
             {/* https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg */}
             {/* https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX1000.jpg */}
@@ -34,5 +35,5 @@ export default function MovieDetails() {
                 <p>{currentMovie.Genre}</p>
             </div>
         </div>}
-    </>
+    </Modal>
 }

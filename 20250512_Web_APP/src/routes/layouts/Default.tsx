@@ -18,7 +18,7 @@ export default function Default() {
                 animate={{ opacity: 1}}
                 // AnimatePresence 로 감싸주면, 사라지는 페이지에 대한 속성을 추가할 수 있어짐! -> 'exit' 속성 추가
                 exit={{ opacity: 0, position: 'absolute'}}
-                transition={{ duration: 1 }}>
+                transition={{ duration: 0.2 }}>
                 {outlet}
             </motion.div>
         </AnimatePresence>

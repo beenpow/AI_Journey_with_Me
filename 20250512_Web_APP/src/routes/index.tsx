@@ -25,12 +25,16 @@ const router = createBrowserRouter([
             },
             {
                 path: '/movies',
-                element: <Movies />
+                element: <Movies />,
+                // 중첩 라우팅 으로 MovieDetails 를 Movie 를 거쳐서 가도록 변경
+                children: [
+                    {
+                        path: ':movieId',// movies/123
+                        element: <MovieDetails />
+                    }
+                ]
             },
-            {
-                path: '/movies/:movieId',// movies/123
-                element: <MovieDetails />
-            }
+            
         ]
     },
     {
