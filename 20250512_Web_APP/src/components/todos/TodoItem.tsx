@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 //import type{ Todo } from '@/stores/todo' // 아래처럼 type 을 괄호 안에 넣어버릴 수 있음!!
 import { useTodoStore, type Todo } from '@/stores/todo'
+import Button from '@/components/Button'
 
 
 export default function TodoItem( { todo } : { todo : Todo }) {
@@ -47,24 +48,24 @@ export default function TodoItem( { todo } : { todo : Todo }) {
                     onChange={(e) => { setTitle(e.target.value)}}
                     onKeyDown={handleKeyDown}
                 />
-                <button onClick={() => {
+                <Button onClick={() => {
                     updateTodo({
                         ...todo,
                         title: title
                     })
                     setIsEditMode(false)
-                }}>저장</button>
-                <button onClick={handleCancle}>취소</button>
+                }}>저장</Button>
+                <Button onClick={handleCancle} color="secondary">취소</Button>
             </>
         ) : (
             <>
                 <div>{todo.title}</div>
-                <button 
+                <Button 
                     className="bg-blue-500 text-white rounded-md px-2"
-                    onClick={() => setIsEditMode(true)}>수정</button>
-                <button 
-                    className="bg-red-500 text-white rounded-md px-2"
-                    onClick={() => deleteTodo(todo)}>삭제</button>
+                    onClick={() => setIsEditMode(true)}>수정</Button>
+                <Button 
+                    color="danger"
+                    onClick={() => deleteTodo(todo)}>삭제</Button>
             </>
         )}
     </div>

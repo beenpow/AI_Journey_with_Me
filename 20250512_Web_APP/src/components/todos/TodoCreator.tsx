@@ -14,12 +14,14 @@ export default function TodoCreator() {
         setLoading(false)
     }
 
-    return <>
-        <input 
-            type="text" 
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)}
-            onKeyDown={(e) => {
+    return (
+        <div className="flex gap-2 items-center">
+            <input 
+                className="h-[30px] border-1 border-gray-400 rounded-md px-2"
+                type="text" 
+                value={title} 
+                onChange={(e) => setTitle(e.target.value)}
+                onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
                     handleCreateTodo()
                 }
@@ -27,6 +29,7 @@ export default function TodoCreator() {
         />
         {/* 그냥 button 말고, 방금 우리가 만든(Button.tsx) 컴포넌트를 사용해보자 */}
         <Button onClick={handleCreateTodo} loading={loading}>추가</Button>
-    </>
+        </div>
+    )
 
 }
