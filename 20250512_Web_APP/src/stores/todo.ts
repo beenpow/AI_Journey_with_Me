@@ -34,6 +34,7 @@ export const useTodoStore = create(
         }
         async function createTodo() {
             const { title } = get()
+            if (!title.trim()) return
             await requestTodos({
                 method: 'POST',
                 data: {
@@ -43,6 +44,7 @@ export const useTodoStore = create(
             await fetchTodos()
         }
         async function updateTodo(todo: Todo) {
+            if (!todo.title.trim()) return
             await requestTodos({
                 todoId: todo.id,
                 method: 'PUT',

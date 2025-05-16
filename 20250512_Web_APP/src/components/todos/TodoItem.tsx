@@ -12,24 +12,30 @@ export default function TodoItem( { todo } : { todo : Todo }) {
     useEffect(() => {
         if (isEditMode) {
             // 포커스
-            setTitle(todo.title)
+            inputRef.current?.focus()
         }
     }, [isEditMode])
 
     return <div className='flex gap-[10px]'>
         {isEditMode ? (
             <div>
-                <input className="border-1 border-gray-400 rounded-md"
+                <input 
+                    ref={inputRef}
+                    className="border-1 border-gray-400 rounded-md"
                     type="text" 
                     value={title} 
                     onChange={(e) => { setTitle(e.target.value)}}
                     onKeyDown={(e) => {
-                        if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
+                        if (e.nativeEvent.isComposing) return
+                        if (e.key === 'Enter') {
                             updateTodo({
                                 // 전개되는 객체에 있는 title 은 내가 주는 title 로 바꿔줘
                                 ...todo,
                                 title: title
                             })
+                            setIsEditMode(false)
+                        }
+                        if (e.key === 'Escape') {
                             setIsEditMode(false)
                         }
                     }}
