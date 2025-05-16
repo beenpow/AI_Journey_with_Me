@@ -55,11 +55,19 @@ export const useTodoStore = create(
             })
             await fetchTodos()
         }
+        async function deleteTodo(todo: Todo) {
+            await requestTodos({
+                todoId: todo.id,
+                method: 'DELETE'
+            })
+            await fetchTodos()
+        }
         return {
             setTitle,
             fetchTodos,
             createTodo,
-            updateTodo
+            updateTodo,
+            deleteTodo
         }
     }) 
 )

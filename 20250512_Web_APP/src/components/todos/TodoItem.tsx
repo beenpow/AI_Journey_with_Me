@@ -7,6 +7,7 @@ export default function TodoItem( { todo } : { todo : Todo }) {
     const [isEditMode, setIsEditMode] = useState(false)
     const [title, setTitle] = useState(todo.title)
     const updateTodo = useTodoStore(state => state.updateTodo)
+    const deleteTodo = useTodoStore(state => state.deleteTodo)
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     useEffect(() => {
@@ -16,29 +17,35 @@ export default function TodoItem( { todo } : { todo : Todo }) {
         }
     }, [isEditMode])
 
+    function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.nativeEvent.isComposing) return
+        if (e.key === 'Enter') {
+            updateTodo({
+                // 전개되는 객체에 있는 title 은 내가 주는 title 로 바꿔줘
+                ...todo,
+                title: title
+            })
+            handleCancle()
+        }
+        if (e.key === 'Escape') {
+            handleCancle()
+        }
+    }
+    function handleCancle() {
+        setIsEditMode(false)
+        setTitle(todo.title)
+    }
+
     return <div className='flex gap-[10px]'>
         {isEditMode ? (
-            <div>
+            <>
                 <input 
                     ref={inputRef}
                     className="border-1 border-gray-400 rounded-md"
                     type="text" 
                     value={title} 
                     onChange={(e) => { setTitle(e.target.value)}}
-                    onKeyDown={(e) => {
-                        if (e.nativeEvent.isComposing) return
-                        if (e.key === 'Enter') {
-                            updateTodo({
-                                // 전개되는 객체에 있는 title 은 내가 주는 title 로 바꿔줘
-                                ...todo,
-                                title: title
-                            })
-                            setIsEditMode(false)
-                        }
-                        if (e.key === 'Escape') {
-                            setIsEditMode(false)
-                        }
-                    }}
+                    onKeyDown={handleKeyDown}
                 />
                 <button onClick={() => {
                     updateTodo({
@@ -47,13 +54,17 @@ export default function TodoItem( { todo } : { todo : Todo }) {
                     })
                     setIsEditMode(false)
                 }}>저장</button>
-            </div>
+                <button onClick={handleCancle}>취소</button>
+            </>
         ) : (
             <>
                 <div>{todo.title}</div>
                 <button 
                     className="bg-blue-500 text-white rounded-md px-2"
                     onClick={() => setIsEditMode(true)}>수정</button>
+                <button 
+                    className="bg-red-500 text-white rounded-md px-2"
+                    onClick={() => deleteTodo(todo)}>삭제</button>
             </>
         )}
     </div>
